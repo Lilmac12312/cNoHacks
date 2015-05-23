@@ -1,2 +1,2 @@
 # cNoHacks
-A simple hack detection which alerts, no block.
+A simple hack detection which alerts, not blocks.
