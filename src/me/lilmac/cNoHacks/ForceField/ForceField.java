@@ -30,7 +30,7 @@ public class ForceField implements CommandExecutor, Listener {
 
 	@EventHandler
 	public void onEntityDamage(EntityDamageEvent event) {
-		if(event.getEntity() instanceof Villager) {
+		if(event.getEntity() instanceof Villager && event.getEntity().hasMetaData("cancel")) {
  			event.setCancelled(true);
 		}
 	}
@@ -45,7 +45,7 @@ public class ForceField implements CommandExecutor, Listener {
 					if(online.hasPermission("cnohacks.view") || online.isOp()) {
 						if (ConfigManager.contains("alerts.yml", online.getName())) {
 							if (ConfigManager.get("alerts.yml").getBoolean(online.getName() + ".Alerts")) {
-								online.sendMessage(Utils.getPrefix() + damager.getDisplayName() + " §7might be using §cForcefield");
+								online.sendMessage(Utils.getPrefix() + damager.getDisplayName() + " Â§7might be using Â§cForcefield");
 							}
 						}
 					}
@@ -79,8 +79,10 @@ public class ForceField implements CommandExecutor, Listener {
 					villager.setCustomName(online.getName());
 					villager.setCustomNameVisible(true);
 					villager.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, Integer.MAX_VALUE, 1));
+					villager.setMetadata("cancel", (MetadataValue)new FixedMetadataValue((Plugin)plugin, (Object)true));
 					Bukkit.getScheduler().runTaskLater(plugin, new Runnable() {
 						public void run() {
+							vilager.removeMetaData("cancel");
 							villager.remove();
 						}
 					}, 10);
