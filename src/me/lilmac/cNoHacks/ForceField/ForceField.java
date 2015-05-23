@@ -58,7 +58,7 @@ public class ForceField implements CommandExecutor, Listener {
 	public void onVillagerInteract(PlayerInteractEntityEvent event) { 
 		if(event.getRightClicked() instanceof Villager) {
 			Villager villager = (Villager) event.getRightClicked();
-			if(villager.getCustomName() != null) {
+			if(villager.hasMetadata("cancel")) {
 				event.setCancelled(true);
 			}
 		}
